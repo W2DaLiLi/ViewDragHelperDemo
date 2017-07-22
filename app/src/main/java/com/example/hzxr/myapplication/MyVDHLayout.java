@@ -67,9 +67,10 @@ public class MyVDHLayout extends LinearLayout {
 
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
-            Log.d(t,"onViewPositionChanged");
+            Log.d(t,"onViewPositionChanged"+"left:"+left+"top:"+top);
             int childHeight = changedView.getHeight();
             float offset = (float)(mMainLayout.getHeight()-top)*1.0f/childHeight;
+            Log.d(t,"offset:"+offset);
             changedView.setVisibility(offset == 0 ? View.INVISIBLE:View.VISIBLE);
             mMeunOnScreen = offset;
             invalidate();
@@ -77,13 +78,13 @@ public class MyVDHLayout extends LinearLayout {
 
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {//手指释放时回调
-            Log.d(t,"onViewReleased");
-            if (xvel > 0 ||xvel == 0 && releasedChild.getTop() < mMainLayout.getHeight()-releasedChild.getHeight()*0.5){
+            Log.d(t,"onViewReleased,yvel:"+yvel);
+            if (yvel < 0 ||yvel == 0 && releasedChild.getTop() < mMainLayout.getHeight()-releasedChild.getHeight()*0.5){
                 mViewDragHelper.settleCapturedViewAt(0,mMainLayout.getHeight()-releasedChild.getHeight());
                 Log.d("SHOW","LH:"+mMainLayout.getHeight()+"MH"+releasedChild.getHeight());
             }else {
                 Log.d("Released","NO");
-                mViewDragHelper.settleCapturedViewAt(mMainLayout.getHeight(),0);
+                mViewDragHelper.settleCapturedViewAt(0,mMainLayout.getHeight());
             }
             invalidate();
         }
