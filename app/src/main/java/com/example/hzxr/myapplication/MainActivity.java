@@ -2,6 +2,7 @@ package com.example.hzxr.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.animation.Animation;
 
 public class MainActivity extends AppCompatActivity {
 

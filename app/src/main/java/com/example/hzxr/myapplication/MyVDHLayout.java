@@ -157,4 +157,5 @@ public class MyVDHLayout extends LinearLayout {
         mViewDragHelper.processTouchEvent(event);
         return true;
     }
+
 }
