@@ -1,5 +1,6 @@
 package com.example.hzxr.myapplication;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
@@ -24,6 +25,7 @@ public class MyVDHLayout extends LinearLayout {
     private View mMainLayout;//主视图
     private View mMenu;//菜单视图
     private float mMeunOnScreen;//滑动中侧栏所占比例
+    private ObjectAnimator animator;
 
     public MyVDHLayout(Context context){
         this(context,null);
@@ -82,9 +84,12 @@ public class MyVDHLayout extends LinearLayout {
             if (yvel < 0 ||yvel == 0 && releasedChild.getTop() < mMainLayout.getHeight()-releasedChild.getHeight()*0.5){
                 mViewDragHelper.settleCapturedViewAt(0,mMainLayout.getHeight()-releasedChild.getHeight());
                 Log.d("SHOW","LH:"+mMainLayout.getHeight()+"MH"+releasedChild.getHeight());
+                animator.start();
             }else {
                 Log.d("Released","NO");
                 mViewDragHelper.settleCapturedViewAt(0,mMainLayout.getHeight());
+                animator = ObjectAnimator.ofFloat(mMainLayout,"alpha",0.5f,1f);
+                animator.start();
             }
             invalidate();
         }
@@ -105,6 +110,8 @@ public class MyVDHLayout extends LinearLayout {
             mMenu = getChildAt(1);
             mMainLayout = getChildAt(0);
         }
+        animator = ObjectAnimator.ofFloat(mMainLayout,"alpha",1f,0.5f);
+        animator.setDuration(500);
     }
 
     @Override
