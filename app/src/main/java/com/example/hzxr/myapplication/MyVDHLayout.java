@@ -84,7 +84,11 @@ public class MyVDHLayout extends LinearLayout {
             if (yvel < 0 ||yvel == 0 && releasedChild.getTop() < mMainLayout.getHeight()-releasedChild.getHeight()*0.5){
                 mViewDragHelper.settleCapturedViewAt(0,mMainLayout.getHeight()-releasedChild.getHeight());
                 Log.d("SHOW","LH:"+mMainLayout.getHeight()+"MH"+releasedChild.getHeight());
-                animator.start();
+                if (yvel != 0){
+                    animator = ObjectAnimator.ofFloat(mMainLayout,"alpha",1f,0.5f);
+                    animator.setDuration(500);
+                    animator.start();
+                    }
             }else {
                 Log.d("Released","NO");
                 mViewDragHelper.settleCapturedViewAt(0,mMainLayout.getHeight());
@@ -110,8 +114,7 @@ public class MyVDHLayout extends LinearLayout {
             mMenu = getChildAt(1);
             mMainLayout = getChildAt(0);
         }
-        animator = ObjectAnimator.ofFloat(mMainLayout,"alpha",1f,0.5f);
-        animator.setDuration(500);
+
     }
 
     @Override
